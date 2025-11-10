@@ -36,7 +36,6 @@ class MovieApiTests(TestCase):
             "genres": ["Drama", "Comedy"],
             "actors": ["Kate Winslet"],
         }
-        print(movies.data)
         self.assertEqual(movies.status_code, status.HTTP_200_OK)
         for field in titanic:
             self.assertEqual(movies.data["results"][0][field], titanic[field])
@@ -57,10 +56,8 @@ class MovieApiTests(TestCase):
         movies = self.client.get(
             f"/api/cinema/movies/?actors={self.actress.id}"
         )
-        print(movies.data)
         self.assertEqual(len(movies.data["results"]), 1)
         movies = self.client.get(f"/api/cinema/movies/?actors={123}")
-        print(movies.data)
         self.assertEqual(len(movies.data["results"]), 0)
 
     def test_get_movies_with_title_filtering(self):

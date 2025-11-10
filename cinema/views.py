@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from rest_framework import viewsets
 
 from cinema.models import (
@@ -25,7 +23,6 @@ from cinema.serializers import (
     MovieSessionDetailSerializer,
     MovieListSerializer,
     TicketSerializer,
-    TicketListSerializer,
     OrderListSerializer,
     OrderPostSerializer,
 )
@@ -102,9 +99,7 @@ class MovieSessionViewSet(viewsets.ModelViewSet):
         movie_ids = self.request.GET.get("movie")
         if date:
             qs = qs.filter(
-                show_time__icontains=datetime.strptime(
-                    date, "%Y-%m-%d"
-                ).strftime("%Y-%m-%d")
+                show_time__date=date
             )
         if movie_ids:
             qs = qs.filter(
@@ -128,3 +123,6 @@ class OrderViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user)
