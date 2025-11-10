@@ -102,10 +102,14 @@ class MovieSessionViewSet(viewsets.ModelViewSet):
         movie_ids = self.request.GET.get("movie")
         if date:
             qs = qs.filter(
-                show_time__icontains=datetime.strptime(date, "%Y-%m-%d").strftime("%Y-%m-%d")
+                show_time__icontains=datetime.strptime(
+                    date, "%Y-%m-%d"
+                ).strftime("%Y-%m-%d")
             )
         if movie_ids:
-            qs = qs.filter(movie_id__in=[int(id_) for id_ in movie_ids.split(",")])
+            qs = qs.filter(
+                movie_id__in=[int(id_) for id_ in movie_ids.split(",")]
+            )
         return qs
 
 

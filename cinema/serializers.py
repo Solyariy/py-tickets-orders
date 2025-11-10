@@ -95,6 +95,7 @@ class TicketListSerializer(TicketSerializer):
         read_only=True
     )
 
+
 class TicketRowSeatSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ticket
