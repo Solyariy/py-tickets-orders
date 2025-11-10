@@ -61,19 +61,19 @@ class MovieViewSet(viewsets.ModelViewSet):
         params = self.request.GET
         if params:
             if "actors" in params:
-                return qs.filter(
+                qs = qs.filter(
                     actors__id__in=[
                         int(id_) for id_ in params["actors"].split(",")
                     ]
                 )
             if "genres" in params:
-                return qs.filter(
+                qs = qs.filter(
                     genres__id__in=[
                         int(id_) for id_ in params["genres"].split(",")
                     ]
                 )
             if "title" in params:
-                return qs.filter(
+                qs = qs.filter(
                     title__icontains=params["title"]
                 )
         return qs
